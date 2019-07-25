@@ -59,6 +59,9 @@ export class ClusterIPC extends EventEmitter {
 			} catch (error) {
 				message.reply({ success: false, d: { name: error.name, message: error.message, stack: error.stack } });
 			}
+		} else if (op === IPCEvents.REQUEST) {
+			// TODO: execute ipcPiece
+			this.client.ipcPieces.run(message)
 		}
 	}
 }

@@ -19,7 +19,8 @@ export enum IPCEvents {
 	RESTART,
 	FETCHUSER,
 	FETCHCHANNEL,
-	FETCHGUILD
+	FETCHGUILD,
+	REQUEST
 }
 
 export enum SharderEvents {
