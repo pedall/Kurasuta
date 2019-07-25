@@ -41,6 +41,22 @@ export class MasterIPC extends EventEmitter {
 		this.manager.emit('message', d);
 	}
 
+
+	// new method to run custom ipcPieces
+	private async _request(message: NodeMessage) {
+		const { d } = message.data;
+		try {
+			let data = await this.node.broadcast({ op: IPCEvents.REQUEST, d });
+			let errored = data.filter(res => !res.success);
+			// TODO: maybe add some more data what shard could not fulfill the request
+			data = data.map(res => res.d);
+			message.reply({ success: true, d: data });
+		} catch (error) {
+			message.reply({ success: false, d: { name: error.name, message: error.message, stack: error.stack } });
+		}
+		
+	}
+
 	private async _broadcast(message: NodeMessage) {
 		const { d } = message.data;
 		try {
