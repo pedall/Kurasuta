@@ -52,7 +52,7 @@ export class ClusterIPC extends EventEmitter {
 	}
 
 	private async _message(message: NodeMessage) {
-		const { op, d } = message.data;
+		const { op, d, route } = message.data;
 		if (op === IPCEvents.EVAL) {
 			try {
 				message.reply({ success: true, d: await this._eval(d) });
@@ -60,8 +60,11 @@ export class ClusterIPC extends EventEmitter {
 				message.reply({ success: false, d: { name: error.name, message: error.message, stack: error.stack } });
 			}
 		} else if (op === IPCEvents.REQUEST) {
-			// TODO: execute ipcPiece
-			this.client.ipcPieces.run(message)
+			try {
+				this.client.ipcPieces.run(message)
+			} catch (error) {
+				message.reply({ success: false, d: { name: error.name, message: error.message, stack: error.stack }, route });
+			}
 		}
 	}
 }
