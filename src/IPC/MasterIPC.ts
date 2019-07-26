@@ -44,15 +44,15 @@ export class MasterIPC extends EventEmitter {
 
 	// new method to run custom ipcPieces
 	private async _request(message: NodeMessage) {
-		const { d } = message.data;
+		const { d, route } = message.data;
 		try {
-			let data = await this.node.broadcast({ op: IPCEvents.REQUEST, d });
+			let data = await this.node.broadcast({ op: IPCEvents.REQUEST, d, route });
 			let errored = data.filter(res => !res.success);
 			// TODO: maybe add some more data what shard could not fulfill the request
 			data = data.map(res => res.d);
-			message.reply({ success: true, d: data });
+			message.reply({ success: true, d: data, route });
 		} catch (error) {
-			message.reply({ success: false, d: { name: error.name, message: error.message, stack: error.stack } });
+			message.reply({ success: false, d: { name: error.name, message: error.message, stack: error.stack }, route });
 		}
 		
 	}
