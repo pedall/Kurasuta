@@ -47,6 +47,9 @@ class ShardClientUtil {
         if (!success)
             throw discord_js_1.Util.makeError(d);
     }
+    request(route, data, options) {
+        return this.ipc.server.send({ op: Constants_1.IPCEvents.REQUEST, d: data, route }, options);
+    }
     send(data, options) {
         if (typeof data === 'object') {
             if (data.op)

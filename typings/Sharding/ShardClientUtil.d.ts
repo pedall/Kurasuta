@@ -21,6 +21,7 @@ export declare class ShardClientUtil {
     fetchChannel(id: string): Promise<object>;
     restartAll(): Promise<void>;
     restart(clusterID: number): Promise<void>;
+    request<T>(route: string, data: any, options?: SendOptions): Promise<T>;
     send<T>(data: any, options?: SendOptions): Promise<T>;
     init(): Promise<void>;
 }
