@@ -52,8 +52,12 @@ export class ShardClientUtil {
 	}
 
 	public async restart(clusterID: number): Promise<void> {
-		const { success, d } = await this.ipc.server.send<IPCResult>({ op: IPCEvents.RESTART, d: clusterID });
+		const { success, d } = await this.ipc.server.send({ op: IPCEvents.RESTART, d: clusterID });
 		if (!success) throw Util.makeError(d);
+	}
+
+	public request<T>(route: string, data: any, options?: SendOptions): Promise<T> {
+		return this.ipc.server.send({ op: IPCEvents.REQUEST, d: data, route }, options);
 	}
 
 	public send<T>(data: any, options?: SendOptions): Promise<T> {
