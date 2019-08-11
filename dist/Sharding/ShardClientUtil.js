@@ -62,5 +62,3 @@ class ShardClientUtil {
     }
 }
 exports.ShardClientUtil = ShardClientUtil;
-
-//# sourceMappingURL=ShardClientUtil.js.map

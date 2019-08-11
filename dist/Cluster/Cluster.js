@@ -74,5 +74,3 @@ class Cluster extends events_1.EventEmitter {
     }
 }
 exports.Cluster = Cluster;
-
-//# sourceMappingURL=Cluster.js.map

@@ -61,5 +61,3 @@ class ClusterIPC extends events_1.EventEmitter {
     }
 }
 exports.ClusterIPC = ClusterIPC;
-
-//# sourceMappingURL=ClusterIPC.js.map
