@@ -126,3 +126,5 @@ class MasterIPC extends events_1.EventEmitter {
     }
 }
 exports.MasterIPC = MasterIPC;
+
+//# sourceMappingURL=MasterIPC.js.map

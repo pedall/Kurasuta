@@ -23,3 +23,5 @@ var IPCEvents;
     IPCEvents[IPCEvents["FETCHGUILD"] = 13] = "FETCHGUILD";
     IPCEvents[IPCEvents["REQUEST"] = 14] = "REQUEST";
 })(IPCEvents = exports.IPCEvents || (exports.IPCEvents = {}));
+
+//# sourceMappingURL=Constants.js.map

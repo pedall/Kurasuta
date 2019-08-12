@@ -52,6 +52,7 @@ class ClusterIPC extends events_1.EventEmitter {
         }
         else if (op === Constants_1.IPCEvents.REQUEST) {
             try {
+                // @ts-ignore
                 this.client.ipcPieces.run(message);
             }
             catch (error) {
@@ -61,3 +62,5 @@ class ClusterIPC extends events_1.EventEmitter {
     }
 }
 exports.ClusterIPC = ClusterIPC;
+
+//# sourceMappingURL=ClusterIPC.js.map
