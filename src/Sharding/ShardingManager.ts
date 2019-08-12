@@ -98,8 +98,8 @@ export class ShardingManager extends EventEmitter {
 				try {
 					await cluster.spawn();
 				} catch (error) {
-					this.emit('debug', `Cluster ${cluster.id} failed to start, enqueue and retry`);
-					this.emit('error', new Error(`Cluster ${cluster.id} failed to start`));
+					this.emit('debug', `Cluster ${cluster.id} failed to start, enqueue and retry: ${error}`);
+					this.emit('error', new Error(`Cluster ${cluster.id} failed to start: ${error}`));
 					failed.push(cluster);
 				}
 			}
