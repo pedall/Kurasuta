@@ -133,3 +133,5 @@ class ShardingManager extends events_1.EventEmitter {
     }
 }
 exports.ShardingManager = ShardingManager;
+
+//# sourceMappingURL=ShardingManager.js.map

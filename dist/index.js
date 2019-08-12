@@ -25,3 +25,5 @@ const MasterIPC_1 = require("./IPC/MasterIPC");
 exports.MasterIPC = MasterIPC_1.MasterIPC;
 const Util = __importStar(require("./Util/Util"));
 exports.Util = Util;
+
+//# sourceMappingURL=index.js.map
