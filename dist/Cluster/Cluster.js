@@ -24,15 +24,13 @@ class Cluster extends events_1.EventEmitter {
     }
     async eval(script) {
         script = typeof script === 'function' ? `(${script})(this)` : script;
-        // @ts-ignore
-        const { success, d } = await this.manager.ipc.node.sendTo(`Cluster ${this.id}`, { op: Constants_1.IPCEvents.EVAL, d: script });
+        const { success, d } = await this.manager.ipc.server.sendTo(`Cluster ${this.id}`, { op: Constants_1.IPCEvents.EVAL, d: script });
         if (!success)
             throw discord_js_1.Util.makeError(d);
         return d;
     }
     async fetchClientValue(prop) {
-        // @ts-ignore
-        const { success, d } = await this.manager.ipc.node.sendTo(`Cluster ${this.id}`, { op: Constants_1.IPCEvents.EVAL, d: `this.${prop}` });
+        const { success, d } = await this.manager.ipc.server.sendTo(`Cluster ${this.id}`, { op: Constants_1.IPCEvents.EVAL, d: `this.${prop}` });
         if (!success)
             throw discord_js_1.Util.makeError(d);
         return d;

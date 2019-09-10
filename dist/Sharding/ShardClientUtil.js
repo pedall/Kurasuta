@@ -39,22 +39,23 @@ class ShardClientUtil {
             throw new Error('No channel with this id found!');
         return d;
     }
-    restartAll() {
-        return this.ipc.server.send({ op: Constants_1.IPCEvents.RESTARTALL }, { receptive: false });
+    async restartAll() {
+        await this.ipc.server.send({ op: Constants_1.IPCEvents.RESTARTALL }, { receptive: false });
     }
     async restart(clusterID) {
         const { success, d } = await this.ipc.server.send({ op: Constants_1.IPCEvents.RESTART, d: clusterID });
         if (!success)
             throw discord_js_1.Util.makeError(d);
     }
+    respawnAll() {
+        return this.restartAll();
+    }
     request(route, data, options) {
         return this.ipc.server.send({ op: Constants_1.IPCEvents.REQUEST, d: data, route }, options);
     }
     send(data, options) {
-        if (typeof data === 'object') {
-            if (data.op)
-                return this.ipc.server.send(data, options);
-        }
+        if (typeof data === 'object' && data.op !== undefined)
+            return this.ipc.server.send(data, options);
         return this.ipc.server.send({ op: Constants_1.IPCEvents.MESSAGE, d: data }, options);
     }
     init() {

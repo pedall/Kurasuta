@@ -2,7 +2,7 @@ export declare const http: {
     version: number;
     api: string;
 };
-export declare const version = "0.2.18";
+export declare const version = "1.1.0";
 export declare enum IPCEvents {
     EVAL = 0,
     MESSAGE = 1,
@@ -10,7 +10,7 @@ export declare enum IPCEvents {
     READY = 3,
     SHARDREADY = 4,
     SHARDRECONNECT = 5,
-    SHARDRESUMED = 6,
+    SHARDRESUME = 6,
     SHARDDISCONNECT = 7,
     MASTEREVAL = 8,
     RESTARTALL = 9,
@@ -19,4 +19,15 @@ export declare enum IPCEvents {
     FETCHCHANNEL = 12,
     FETCHGUILD = 13,
     REQUEST = 14
+}
+export declare enum SharderEvents {
+    DEBUG = "debug",
+    MESSAGE = "message",
+    READY = "ready",
+    SPAWN = "spawn",
+    SHARD_READY = "shardReady",
+    SHARD_RECONNECT = "shardReconnect",
+    SHARD_RESUME = "shardResume",
+    SHARD_DISCONNECT = "shardDisconnect",
+    ERROR = "error"
 }

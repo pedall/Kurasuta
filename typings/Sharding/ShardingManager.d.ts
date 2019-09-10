@@ -3,6 +3,7 @@ import { CloseEvent } from '../Cluster/BaseCluster';
 import { Client, ClientOptions } from 'discord.js';
 import { MasterIPC } from '../IPC/MasterIPC';
 import { Cluster } from '../Cluster/Cluster';
+import { SharderEvents } from '../Util/Constants';
 import { EventEmitter } from 'events';
 export interface SharderOptions {
     token?: string;
@@ -16,6 +17,7 @@ export interface SharderOptions {
     respawn?: boolean;
     ipcSocket?: string | number;
     timeout?: number;
+    retry?: boolean;
 }
 export interface SessionObject {
     url: string;
@@ -37,6 +39,7 @@ export declare class ShardingManager extends EventEmitter {
     ipcSocket: string | number;
     respawn: boolean;
     timeout: number;
+    retry: boolean;
     ipc: MasterIPC;
     private development;
     private token?;
@@ -44,20 +47,21 @@ export declare class ShardingManager extends EventEmitter {
     spawn(): Promise<void>;
     restartAll(): Promise<void>;
     restart(clusterID: number): Promise<void>;
-    fetchClientValues<T>(prop: string): Promise<T[]>;
-    eval<T>(script: string): Promise<T>;
-    on(event: 'debug', listener: (message: string) => void): this;
-    on(event: 'message', listener: (message: any) => void): this;
-    on(event: 'ready' | 'spawn', listener: (cluster: Cluster) => void): this;
-    on(event: 'shardReady' | 'shardReconnect', listener: (shardID: number) => void): this;
-    on(event: 'shardResumed', listener: (replayed: number, shardID: number) => void): this;
-    on(event: 'shardDisconnect', listener: (closeEvent: CloseEvent, shardID: number) => void): this;
-    once(event: 'debug', listener: (message: string) => void): this;
-    once(event: 'message', listener: (message: any) => void): this;
-    once(event: 'ready' | 'spawn', listener: (cluster: Cluster) => void): this;
-    once(event: 'shardReady' | 'shardReconnect', listener: (shardID: number) => void): this;
-    once(event: 'shardResumed', listener: (replayed: number, shardID: number) => void): this;
-    once(event: 'shardDisconnect', listener: (closeEvent: CloseEvent, shardID: number) => void): this;
+    fetchClientValues(prop: string): Promise<unknown[]>;
+    eval(script: string): Promise<unknown>;
+    on(event: SharderEvents.DEBUG, listener: (message: string) => void): this;
+    on(event: SharderEvents.MESSAGE, listener: (message: unknown) => void): this;
+    on(event: SharderEvents.READY | SharderEvents.SPAWN, listener: (cluster: Cluster) => void): this;
+    on(event: SharderEvents.SHARD_READY | SharderEvents.SHARD_RECONNECT, listener: (shardID: number) => void): this;
+    on(event: SharderEvents.SHARD_RESUME, listener: (replayed: number, shardID: number) => void): this;
+    on(event: SharderEvents.SHARD_DISCONNECT, listener: (closeEvent: CloseEvent, shardID: number) => void): this;
+    once(event: SharderEvents.DEBUG, listener: (message: string) => void): this;
+    once(event: SharderEvents.MESSAGE, listener: (message: unknown) => void): this;
+    once(event: SharderEvents.READY | SharderEvents.SPAWN, listener: (cluster: Cluster) => void): this;
+    once(event: SharderEvents.SHARD_READY | SharderEvents.SHARD_RECONNECT, listener: (shardID: number) => void): this;
+    once(event: SharderEvents.SHARD_RESUME, listener: (replayed: number, shardID: number) => void): this;
+    once(event: SharderEvents.SHARD_DISCONNECT, listener: (closeEvent: CloseEvent, shardID: number) => void): this;
     private retryFailed;
     private _fetchSessionEndpoint;
+    private _debug;
 }

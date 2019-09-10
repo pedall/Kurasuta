@@ -4,7 +4,7 @@ exports.http = {
     version: 7,
     api: 'https://discordapp.com/api'
 };
-exports.version = '0.2.18';
+exports.version = '1.1.0';
 var IPCEvents;
 (function (IPCEvents) {
     IPCEvents[IPCEvents["EVAL"] = 0] = "EVAL";
@@ -13,7 +13,7 @@ var IPCEvents;
     IPCEvents[IPCEvents["READY"] = 3] = "READY";
     IPCEvents[IPCEvents["SHARDREADY"] = 4] = "SHARDREADY";
     IPCEvents[IPCEvents["SHARDRECONNECT"] = 5] = "SHARDRECONNECT";
-    IPCEvents[IPCEvents["SHARDRESUMED"] = 6] = "SHARDRESUMED";
+    IPCEvents[IPCEvents["SHARDRESUME"] = 6] = "SHARDRESUME";
     IPCEvents[IPCEvents["SHARDDISCONNECT"] = 7] = "SHARDDISCONNECT";
     IPCEvents[IPCEvents["MASTEREVAL"] = 8] = "MASTEREVAL";
     IPCEvents[IPCEvents["RESTARTALL"] = 9] = "RESTARTALL";
@@ -23,5 +23,17 @@ var IPCEvents;
     IPCEvents[IPCEvents["FETCHGUILD"] = 13] = "FETCHGUILD";
     IPCEvents[IPCEvents["REQUEST"] = 14] = "REQUEST";
 })(IPCEvents = exports.IPCEvents || (exports.IPCEvents = {}));
+var SharderEvents;
+(function (SharderEvents) {
+    SharderEvents["DEBUG"] = "debug";
+    SharderEvents["MESSAGE"] = "message";
+    SharderEvents["READY"] = "ready";
+    SharderEvents["SPAWN"] = "spawn";
+    SharderEvents["SHARD_READY"] = "shardReady";
+    SharderEvents["SHARD_RECONNECT"] = "shardReconnect";
+    SharderEvents["SHARD_RESUME"] = "shardResume";
+    SharderEvents["SHARD_DISCONNECT"] = "shardDisconnect";
+    SharderEvents["ERROR"] = "error";
+})(SharderEvents = exports.SharderEvents || (exports.SharderEvents = {}));
 
 //# sourceMappingURL=Constants.js.map

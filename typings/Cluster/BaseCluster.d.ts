@@ -11,5 +11,5 @@ export declare abstract class BaseCluster {
     readonly id: number;
     constructor(manager: ShardingManager);
     init(): Promise<void>;
-    protected abstract launch(): Promise<void>;
+    protected abstract launch(): Promise<void> | void;
 }

@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import { Server, NodeMessage } from 'veza';
 import { Util } from 'discord.js';
-import { ShardingManager } from '..';
+import { ShardingManager, IPCResult } from '..';
 import { isMaster } from 'cluster';
 import { IPCEvents, SharderEvents } from '../Util/Constants';
 import { IPCRequest } from './ClusterIPC';
@@ -46,15 +46,15 @@ export class MasterIPC extends EventEmitter {
 	private async _request(message: NodeMessage) {
 		const { d, route } = message.data;
 		try {
-			let data = await this.node.broadcast({ op: IPCEvents.REQUEST, d, route });
-			let errored = data.filter(res => !res.success);
+			let data = await this.node.broadcast({ op: IPCEvents.REQUEST, d, route }) as IPCResult[];
+			// let errored = data.filter(res => !res.success);
 			// TODO: maybe add some more data what shard could not fulfill the request
-			data = data.map(res => res.d);
-			message.reply({ success: true, d: data, route });
+			let resolved = data.map(res => res.d);
+			message.reply({ success: true, d: resolved, route });
 		} catch (error) {
 			message.reply({ success: false, d: { name: error.name, message: error.message, stack: error.stack }, route });
 		}
-		
+
 	}
 
 	private async _broadcast(message: NodeMessage) {
@@ -103,7 +103,7 @@ export class MasterIPC extends EventEmitter {
 		const { d: clusterID } = message.data;
 		return this.manager.restart(clusterID)
 			.then(() => message.reply({ success: true }))
-			.catch(error => message.reply({ success: false, data: { name: error.name, message: error.message, stack: error.stack } }));
+			.catch(error => message.reply({ success: false, d: { name: error.name, message: error.message, stack: error.stack } }));
 	}
 
 	private async _mastereval(message: NodeMessage) {

@@ -17,6 +17,7 @@ const Constants_1 = require("./Util/Constants");
 exports.version = Constants_1.version;
 exports.http = Constants_1.http;
 exports.IPCEvents = Constants_1.IPCEvents;
+exports.SharderEvents = Constants_1.SharderEvents;
 const Cluster_1 = require("./Cluster/Cluster");
 exports.Cluster = Cluster_1.Cluster;
 const ClusterIPC_1 = require("./IPC/ClusterIPC");

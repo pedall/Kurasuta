@@ -15,11 +15,11 @@ export declare class Cluster extends EventEmitter {
     manager: ShardingManager;
     private _exitListenerFunction;
     constructor(options: ClusterOptions);
-    eval(script: string | Function): Promise<any>;
-    fetchClientValue(prop: string): Promise<any>;
+    eval(script: string | Function): Promise<unknown>;
+    fetchClientValue(prop: string): Promise<unknown>;
     kill(): void;
     respawn(delay?: number): Promise<void>;
-    send(data: object): Promise<any>;
+    send(data: object): any;
     spawn(): Promise<void>;
     private _exitListener;
     private _waitReady;

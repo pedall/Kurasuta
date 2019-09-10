@@ -10,10 +10,10 @@ class ClusterIPC extends events_1.EventEmitter {
         this.id = id;
         this.socket = socket;
         this.client = discordClient;
-        this.node = new veza_1.Node(`Cluster ${this.id}`)
+        this.node = new veza_1.Client(`Cluster ${this.id}`)
             .on('error', error => this.emit('error', error))
-            .on('client.disconnect', client => this.emit('warn', `[IPC] Disconnected from ${client.name}`))
-            .on('client.ready', client => this.emit('debug', `[IPC] Connected to: ${client.name}`))
+            .on('disconnect', client => this.emit('warn', `[IPC] Disconnected from ${client.name}`))
+            .on('ready', client => this.emit('debug', `[IPC] Connected to: ${client.name}`))
             .on('message', this._message.bind(this));
     }
     async broadcast(script) {
@@ -31,14 +31,13 @@ class ClusterIPC extends events_1.EventEmitter {
         return d;
     }
     async init() {
-        this.nodeSocket = await this.node.connectTo('Master', String(this.socket));
+        this.clientSocket = await this.node.connectTo(String(this.socket));
     }
     get server() {
-        return this.nodeSocket;
+        return this.clientSocket;
     }
     _eval(script) {
-        const client = this.client;
-        return client._eval(script);
+        return this.client._eval(script);
     }
     async _message(message) {
         const { op, d, route } = message.data;
@@ -52,6 +51,7 @@ class ClusterIPC extends events_1.EventEmitter {
         }
         else if (op === Constants_1.IPCEvents.REQUEST) {
             try {
+                // Ignore because `ipcPieces` is not available.
                 // @ts-ignore
                 this.client.ipcPieces.run(message);
             }

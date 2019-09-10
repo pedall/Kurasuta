@@ -1,13 +1,13 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
-import { Node } from 'veza';
+import { Server } from 'veza';
 import { ShardingManager } from '..';
 export declare class MasterIPC extends EventEmitter {
     manager: ShardingManager;
     [key: string]: any;
-    node: Node;
+    server: Server;
     constructor(manager: ShardingManager);
-    broadcast<T>(code: string): Promise<T[]>;
+    broadcast(code: string): Promise<unknown[]>;
     private _incommingMessage;
     private _message;
     private _request;
@@ -15,7 +15,7 @@ export declare class MasterIPC extends EventEmitter {
     private _ready;
     private _shardready;
     private _shardreconnect;
-    private _shardresumed;
+    private _shardresume;
     private _sharddisconnect;
     private _restart;
     private _mastereval;
@@ -24,4 +24,5 @@ export declare class MasterIPC extends EventEmitter {
     private _fetchguild;
     private _fetchchannel;
     private _fetch;
+    private _debug;
 }

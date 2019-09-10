@@ -61,8 +61,9 @@ export class ClusterIPC extends EventEmitter {
 			}
 		} else if (op === IPCEvents.REQUEST) {
 			try {
+				// Ignore because `ipcPieces` is not available.
 				// @ts-ignore
-				this.client.ipcPieces.run(message)
+				this.client.ipcPieces.run(message);
 			} catch (error) {
 				message.reply({ success: false, d: { name: error.name, message: error.message, stack: error.stack }, route });
 			}

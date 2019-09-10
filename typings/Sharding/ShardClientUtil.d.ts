@@ -1,9 +1,14 @@
 import { Client } from 'discord.js';
-import { SendOptions } from 'veza';
 import { ClusterIPC } from '../IPC/ClusterIPC';
+import { SendOptions } from 'veza';
 export interface IPCResult {
     success: boolean;
-    d: any;
+    d: unknown;
+}
+export interface IPCError {
+    name: string;
+    message: string;
+    stack: string;
 }
 export declare class ShardClientUtil {
     client: Client;
@@ -13,15 +18,16 @@ export declare class ShardClientUtil {
     readonly id: number;
     readonly ipc: ClusterIPC;
     constructor(client: Client, ipcSocket: string | number);
-    broadcastEval<T>(script: string | Function): Promise<T[]>;
-    masterEval<T>(script: string | Function): Promise<T>;
-    fetchClientValues(prop: string): Promise<any[]>;
+    broadcastEval(script: string | Function): Promise<unknown[]>;
+    masterEval(script: string | Function): Promise<unknown>;
+    fetchClientValues(prop: string): Promise<unknown[]>;
     fetchGuild(id: string): Promise<object>;
     fetchUser(id: string): Promise<object>;
     fetchChannel(id: string): Promise<object>;
     restartAll(): Promise<void>;
     restart(clusterID: number): Promise<void>;
-    request<T>(route: string, data: any, options?: SendOptions): Promise<T>;
-    send<T>(data: any, options?: SendOptions): Promise<T>;
+    respawnAll(): Promise<void>;
+    request(route: string, data: unknown, options?: SendOptions): Promise<unknown>;
+    send(data: any, options?: SendOptions): Promise<unknown>;
     init(): Promise<void>;
 }

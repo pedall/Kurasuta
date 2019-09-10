@@ -29,10 +29,10 @@ class BaseCluster {
         const shardUtil = this.client.shard;
         await shardUtil.init();
         this.client.once('ready', () => shardUtil.send({ op: Constants_1.IPCEvents.READY, d: this.id }, { receptive: false }));
-        this.client.on('shardReady', (id) => shardUtil.send({ op: Constants_1.IPCEvents.SHARDREADY, d: { id: this.id, shardID: id } }, { receptive: false }));
-        this.client.on('reconnecting', (id) => shardUtil.send({ op: Constants_1.IPCEvents.SHARDRECONNECT, d: { id: this.id, shardID: id } }, { receptive: false }));
-        this.client.on('resumed', (replayed, id) => shardUtil.send({ op: Constants_1.IPCEvents.SHARDRESUMED, d: { id: this.id, shardID: id, replayed } }, { receptive: false }));
-        this.client.on('disconnect', (closeEvent, id) => shardUtil.send({ op: Constants_1.IPCEvents.SHARDDISCONNECT, d: { id: this.id, shardID: id, closeEvent } }, { receptive: false }));
+        this.client.on('shardReady', id => shardUtil.send({ op: Constants_1.IPCEvents.SHARDREADY, d: { id: this.id, shardID: id } }, { receptive: false }));
+        this.client.on('shardReconnecting', id => shardUtil.send({ op: Constants_1.IPCEvents.SHARDRECONNECT, d: { id: this.id, shardID: id } }, { receptive: false }));
+        this.client.on('shardResume', (id, replayed) => shardUtil.send({ op: Constants_1.IPCEvents.SHARDRESUME, d: { id: this.id, shardID: id, replayed } }, { receptive: false }));
+        this.client.on('shardDisconnect', (closeEvent, id) => shardUtil.send({ op: Constants_1.IPCEvents.SHARDDISCONNECT, d: { id: this.id, shardID: id, closeEvent } }, { receptive: false }));
         await this.launch();
     }
 }

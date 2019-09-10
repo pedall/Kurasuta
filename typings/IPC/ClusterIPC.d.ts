@@ -1,18 +1,22 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
-import { Node, NodeSocket } from 'veza';
+import { Client as VezaClient, ClientSocket } from 'veza';
 import { Client } from 'discord.js';
+export interface IPCRequest {
+    op: number;
+    d: string;
+}
 export declare class ClusterIPC extends EventEmitter {
     id: number;
     socket: string | number;
-    nodeSocket?: NodeSocket;
+    clientSocket?: ClientSocket;
     client: Client;
-    node: Node;
+    node: VezaClient;
     constructor(discordClient: Client, id: number, socket: string | number);
-    broadcast<T>(script: string | Function): Promise<T[]>;
-    masterEval<T>(script: string | Function): Promise<T>;
+    broadcast(script: string | Function): Promise<unknown[]>;
+    masterEval(script: string | Function): Promise<unknown>;
     init(): Promise<void>;
-    readonly server: NodeSocket;
+    readonly server: ClientSocket;
     private _eval;
     private _message;
 }
